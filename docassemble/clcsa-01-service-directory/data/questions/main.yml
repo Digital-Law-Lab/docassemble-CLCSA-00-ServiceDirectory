@@ -6,7 +6,7 @@ include:
 ---
 metadata:
   title: |
-    Community Legal Centres South Australia
+    CLCSA Service Directory
   short title: |
     CLCSA
   authors:
@@ -30,7 +30,7 @@ metadata:
   exit label: Exit to CLCSA Website
 ---
 objects:
-  - CLCSAlogo: DAStaticFile.using(filename='CLCSA_logo.png')
+  - CLCSAlogo: DAStaticFile.using(filename='CLCSAlogo_nowords.png')
 ---
 features:
   css:
@@ -48,14 +48,29 @@ mandatory: True
 code: |
   set_parts(logo='<img src="' + CLCSAlogo.url_for() + '" style="height: 60px;">')
 ---
+# This code block is to insert a logo and text into the navbar
+mandatory: True
+code: |
+  logoString = """
+    <div class="media">
+      <div>
+        <img src="{}" class="mr-3" height="50">
+      </div>
+      <div class=logotext>
+        CLCSA Service Directory 4
+      </div>
+    </div>
+  """.format(CLCSAlogo.url_for())
+  set_parts(logo=logoString)
+---
 # Welcome screen
 mandatory: true
 question: How to Get Help
 subquestion: |
+  Welcome to the CLCSA Service Directory.
+  Use this app to find the legal services that you need.
 
-  The app provides you with a list of legal services that can help you with
-  your current legal issues.
-  <p>&nbsp;</p>
+  You must agree to the Terms of Use to continue
   <hr>
 
   <div class="disclaimer_heading">Terms of Use</div>
