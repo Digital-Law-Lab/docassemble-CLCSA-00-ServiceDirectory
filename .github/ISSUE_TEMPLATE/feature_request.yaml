@@ -1,0 +1,26 @@
+name: "\U0001F4A1 Feature Request"
+description: Request a new feature or enhancement
+title: '[Feature]: '
+labels:
+  - 'feature'
+  - 'enhancement'
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: A concise and clear description of what problem this feature would solve.
+      placeholder: The problem is...
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: A concise description of the feature you would like to be implemented. You could also inlude suggestions on how it might be implemented!
+      placeholder: It would be great if...
+  - type: checkboxes
+    id: checked-existing-issues
+    attributes:
+      label: Have you checked that the issue has not already been raised?
+      options:
+        - label: I did not find any similar issues or feature requests
+          required: true

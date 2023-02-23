@@ -1,77 +1,80 @@
-.navbar{
-    background-color: rgb(255,255,255) !important;
+.navbar {
+  background-color: rgb(255, 255, 255) !important;
 }
 
 /* This sets the colour of the 'Source' link in the navbar */
 .navbar .nav-item a {
-    color: rgb(0,0,0) !important;
+  color: rgb(0, 0, 0) !important;
 }
 
 /* dropdown-menu manages the right-hand menu (where we access the Playground
    amongst other things) */
 .navbar .dropdown-menu {
-    /*  the rgba() function works just like rgb in that
+  /*  the rgba() function works just like rgb in that
         it sets a colour.  But the fourth element sets an
         'alpha' or transaparency value.  Here we are saying
         to set the transparency to 30%
     */
-    background-color: rgba(25,64,86,0.3);
+  background-color: rgba(25, 64, 86, 0.3);
 }
 
 /* Sets properties for when hovering over a menu item in the 
    drop-down menu */
 .dropdown-item:hover {
-    background-color: rgba(255,211,0,0.5);
+  background-color: rgba(255, 211, 0, 0.5);
 }
 
 /* Line below the navbar*/
-.navbar{
-  border-bottom:8px
-  solid rgba(44,84,143);
+.navbar {
+  border-bottom: 8px solid rgba(44, 84, 143);
   padding: 0px !important;
 }
 
 /* adjusting navbar height */
-.da-pad-for-navbar         { padding-top: 180px; }
-.da-top-for-navbar         { top: 180px;         }
+.da-pad-for-navbar {
+  padding-top: 80px;
+}
+.da-top-for-navbar {
+  top: 180px;
+}
 
 /* Sets the appearnce for the 'Continue' button... */
 .btn-primary {
-  color: rgb(255,255,255);
-  background-color: rgb(25,64,86);
-  border-color: rgb(0,0,0);
+  color: rgb(255, 255, 255);
+  background-color: rgb(25, 64, 86);
+  border-color: rgb(0, 0, 0);
 }
 
 /* ...and when hovering over it */
 .btn-primary:hover {
-  color: rgb(0,0,0);
-  background-color: rgba(151,201,255,0.3);
-  border-color: rgb(0,0,0);
+  color: rgb(0, 0, 0);
+  background-color: rgba(151, 201, 255, 0.3);
+  border-color: rgb(0, 0, 0);
 }
 /* Appearance of 'Safe-Exit' button */
 .btn-warning {
-   color: rgb(255,255,255);
-   background-color: rgb(241,195,3);
-   border-color: rgb(0,0,0);
+  color: rgb(255, 255, 255);
+  background-color: rgb(241, 195, 3);
+  border-color: rgb(0, 0, 0);
 }
 
 /* ...and when hovering over it */
 .btn-warning:hover {
-   color: rgb(255,255,255);
-   background-color: rgb(44,84,143);
-   border-color: rgb(50,50,50);
+  color: rgb(255, 255, 255);
+  background-color: rgb(44, 84, 143);
+  border-color: rgb(50, 50, 50);
 }
 
 /* Appearance of 'Exit' button */
 .btn-danger {
-  color: rgb(255,255,255);
+  color: rgb(255, 255, 255);
   background-color: #424242;
-  border-color: rgb(0,0,0);
+  border-color: rgb(0, 0, 0);
   font-family: Cabin, arial, sans-serif;
 }
 
 /* Back button on Navbar */
-.navbar-brand{
+.navbar-brand {
   font-family: Cabin, arial, sans-serif;
   font-size: 15px;
   margin: 3px;
@@ -81,7 +84,7 @@
 /* font colours and style */
 .row {
   color: #2c548f;
-  font-family: Arial
+  font-family: Arial;
 }
 
 .da-subquestion {
@@ -101,7 +104,7 @@ h1 {
 }
 
 h2 {
-  color:black;
+  color: black;
 }
 
 h4 {
@@ -109,7 +112,7 @@ h4 {
   font-size: 28px;
   font-weight: 400;
   line-height: 20px;
-  text-align: center;  
+  text-align: center;
 }
 
 .disclaimer_heading {
@@ -124,7 +127,7 @@ h4 {
 
 p { 
   font-family: Cabin, arial, sans-serif;
-  color: #58595B;
+  color: #58595b;
   font-size: 15px;
   font-weight: 400;
   line-height: 20px;
@@ -140,25 +143,25 @@ strong {
 }
 
 /* Progress Bar */
-.progress-bar{
-  background-color: rgb(44,84,143);
+.progress-bar {
+  background-color: rgb(44, 84, 143);
   font-family: Cabin, arial, sans-serif;
-  color: rgb(0,0,0);
+  color: rgb(0, 0, 0);
 }
 
 /* Service Font */
-th{
+th {
   font-family: Cabin, arial, sans-serif;
-  color: #58595B;
+  color: #58595b;
   font-size: 20px;
   font-weight: 400;
   line-height: 20px;
   text-align: center;
 }
 
-td{
+td {
   font-family: Cabin, arial, sans-serif;
-  color: #58595B;
+  color: #58595b;
   font-size: 15px;
   font-weight: 400;
   line-height: 20px;
@@ -166,8 +169,29 @@ td{
 }
 
 /* Line Height */
-li{
+li {
   line-height: 1.5;
 }
-  
+
+footer.dafooter {
+  height: 85px !important;
+}
+footer.dafooter > div.container {
+  height: 100% !important;
+}
+
+body.da-pad-for-footer {
+  margin-bottom: 80px !important;
+}
+
+@media only screen and (max-width: 340px) {
+  /* For mobile phones: */
+  footer.dafooter .flindersAttribution {
+    align-items: start !important;
+    line-height: 18px !important;
+    font-size: 10px;
+  }
+  footer.dafooter .flindersLogo {
+    height: 24px !important;
+  }
 }

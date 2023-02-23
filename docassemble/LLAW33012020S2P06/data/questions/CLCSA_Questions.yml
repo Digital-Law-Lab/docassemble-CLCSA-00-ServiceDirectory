@@ -3,9 +3,9 @@
 question: Where are you located?
 subquestion: |
   Please select the location or locations that you are looking for services in.
-  
+
   You may select more than one location.
-  
+
 fields:
   - no label: CLCSAlocation
     datatype: checkboxes
@@ -19,7 +19,7 @@ fields:
       - <b>Mid North</b><br><ul class="a"><li>Mount Gambier</li><li>Murray Bridge</li><li>Port Augusta</li><li>Port Lincoln</li><li>Victor Harbor</li><li>Whyalla</li><li>Pirie</li></ul>: Mid North
     none of the above: False
 right: |
- [FILE mapfinal.png, 400px]
+  [FILE mapfinal.png, 400px]
 progress: 20
 action buttons:
   - label: Safe Exit
@@ -29,8 +29,17 @@ action buttons:
 ---
 question: What type of legal issue do you have?
 subquestion: |
-  
+
   You may select more than one legal issue.
+
+  <div id="tailwindApp"><div id="legalIssueOptions" x-data="boxMultiSelect" >
+    <template x-for="item in items" :key="item.index">
+        <div id="legalIssueItem" x-data="{selected:false}" :class="{selected:selected}" @click="selected = !selected; checkOrigin(item.index)" :data-original-index="item.index">
+          <div id="legalIssueItemImg"><img x-init="replaceImgToSvg($el)" :src="item.img"></div>
+          <div id="legalIssueItemLabel" x-text="item.label"></div>
+        </div>
+    </template>
+  </div></div>
 
 fields:
   - no label: CLCSAlegalissue
@@ -44,7 +53,7 @@ fields:
         image: elder
       - Environmental: Environmental
         image: enviromental
-      - Financial (personal debt, bankrupcy, mortgage): Financial
+      - Financial (personal debt, bankruptcy, mortgage): Financial
         image: financial
       - Homelessness: Homelessness
         image: homelessness
@@ -55,7 +64,6 @@ fields:
       - Other: Other
         image: other
     none of the above: False
-
 progress: 40
 action buttons:
   - label: Safe Exit
@@ -68,11 +76,11 @@ fields:
   - no label: CLCSAgender
     datatype: radio
     choices:
-      - "Male": Male
+      - 'Male': Male
         image: male
-      - "Female": Female
+      - 'Female': Female
         image: female
-      - "Other": other
+      - 'Other': other
         image: other
 
 progress: 60
@@ -98,16 +106,17 @@ action buttons:
     color: warning
     icon: sign-out-alt
 ---
-images: 
+images:
   female: female-symbol.png
   male: male-symbol.png
-  other: questionmark.png
-  financial: financial.png
-  mediation: mediation.png
-  homelessness: homelessness.png
-  migration: migration.png
-  elder: elder.PNG
-  domestic violence: dv.png
-  enviromental: enviro.PNG
-  centrelink: centrelink.PNG
+  other: compass.svg
+  financial: financial.svg
+  mediation: mediation.svg
+  homelessness: homelessness.svg
+  migration: migration.svg
+  elder: elder.svg
+  domestic violence: dv.svg
+  enviromental: enviro.svg
+  centrelink: centrelink.svg
 ---
+
