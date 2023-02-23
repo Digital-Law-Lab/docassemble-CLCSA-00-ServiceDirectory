@@ -50,28 +50,34 @@ code: |
 ---
 # Welcome screen
 mandatory: true
-question: CLCSA Service Directory
+question: How to Get Help
 subquestion: |
 
-  Welcome to the Community Legal Centres South Australia (CLCSA) service directory. This application will ask a series of questions and provide you with a list of legal services.
+  The app provides you with a list of legal services that can help you with
+  your current legal issues.
+  <p>&nbsp;</p>
   <hr>
 
-  #### **Privacy Statement:**
-  > CLCSA aims to protect your data. Your data will not be stored. Data will be deleted at the end of the application. Data is gathered only to create a list of services for you. 
+  <div class="disclaimer_heading">Terms of Use</div>
+  <p class="disclaimer_text">
+  This application does not provide you with legal advice, nor should you consider
+  any legal service recommended by this application as an endorsement of that service.
+  Please call and make your own enquiries to ensure the service is suitable for you.
+  </p>
+  <p class="disclaimer_text">
+  This application may ask some personal questions, such as the type of legal issue
+  you are encountering and questions about your identity, background and where you 
+  live.  We do not store or use any of this information.  Once you exit this app
+  your personal information is deleted.
+  </p>
+  <p class="disclaimer_text">
+  You should only continue if you agree to these terms.
+  </p>
   <hr>
-
-  #### **Disclaimer:**
-  > A safe exit button is provided to you in case you need an emergency exit from the website. This is displayed in yellow in the question screens. The 'I do not agree' button will also direct you to a safe website.
-
-  > This application should not be used as professional legal advice.
-
-  > This application will only find legal services in SA.
-
-  > This application will ask personal questions. Do you agree?
-
-buttons:
+  
+buttons:  
   - I agree: continue
-  - I do not agree: exit
+  - No thanks: exit
     url: http://www.bom.gov.au/sa/forecasts/adelaide.shtml
 
 ---

@@ -115,7 +115,17 @@ h4 {
   text-align: center;
 }
 
-p {
+.disclaimer_heading {
+  font-size: 12pt;
+  text-align: left;
+}
+
+.disclaimer_text {
+  font-size: 9pt;
+  margin-bottom: 0.5em;
+}
+
+p { 
   font-family: Cabin, arial, sans-serif;
   color: #58595b;
   font-size: 15px;
