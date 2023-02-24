@@ -36,15 +36,10 @@ metadata:
       nbc.insertAdjacentElement('beforeBegin', apptitle);
     </script>
 
-    <!-- Adds Safe Exit button 
+    <!-- Adds Safe Exit button  -->
+    <!-- Based on https://docassemble.slack.com/files/UHCKKPY3D/F013TPA5000/escape.yml -->
     <a id="escape" href="https://www.google.com" class="btn btn-warning btn-da">Safe Exit</a>
     <script>
-
-      // Can't use `let` in here as it exists on the page
-      // multiple times. Could put it in a namespace, I
-      // suppose.
-      // To shorten this code, find a way to access jQuery
-      
       var doc = document;  // Need space!
 
       var outer = outer || doc.createElement( 'div' );
@@ -129,20 +124,6 @@ features:
 mandatory: True
 code: |
   set_parts(logo='<img src="' + CLCSAlogo.url_for() + '" style="height: 60px;">')
----
-# This code block is to insert a logo and text into the navbar
-code: |
-  logoString = """
-    <div class="media">
-      <div>
-        <img src="{}" class="mr-3" height="50">
-      </div>
-      <div class=logotext>
-        CLCSA Service Directory 4
-      </div>
-    </div>
-  """.format(CLCSAlogo.url_for())
-  set_parts(logo=logoString)
 ---
 # Welcome screen
 mandatory: true
