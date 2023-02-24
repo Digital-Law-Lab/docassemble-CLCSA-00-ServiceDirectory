@@ -44,12 +44,10 @@ features:
   show progress bar percentage: True
   navigation back button: True
 ---
-mandatory: True
 code: |
   set_parts(logo='<img src="' + CLCSAlogo.url_for() + '" style="height: 60px;">')
 ---
 # This code block is to insert a logo and text into the navbar
-mandatory: True
 code: |
   logoString = """
     <div class="media">
@@ -62,6 +60,90 @@ code: |
     </div>
   """.format(CLCSAlogo.url_for())
   set_parts(logo=logoString)
+---
+# Sets Quick Exit button
+id: escape_button_and_its_placement
+template: escape_button
+content: |
+
+  ${ action_button_html("https://google.com", id_tag="escape", classname="escape", label="Quick Exit", color="danger", size="md") }
+
+  <script>
+
+    // Can't use `let` in here as it exists on the page
+    // multiple times. Could put it in a namespace, I
+    // suppose.
+    // To shorten this code, find a way to access jQuery
+    
+    var doc = document;  // Need space!
+
+    var outer = outer || doc.createElement( 'div' );
+    var inner = inner || doc.createElement( 'div' );
+    outer.appendChild( inner );
+
+    outer.setAttribute( 'class', 'escape-outer' );
+    inner.setAttribute( 'class', 'escape-inner' );
+
+    // Give a unique id to each escaper so we can add only
+    // one per outer/inner pair
+    var suffix = suffix || 1;  // Use `suffix` if it already exists
+    var unique_id = 'escaper_' + suffix;
+    var escaper = doc.getElementById( 'escape' );
+    escaper.setAttribute( 'id', unique_id );
+    inner.appendChild( escaper );
+    
+    if (suffix !== 1) {
+      escaper.classList.add( 'escape-overlap' );
+    }
+    suffix += 1;
+    
+    // Add to navbar
+    var after = doc.getElementById( 'damobile-toggler' );
+    after.parentNode.insertBefore( inner, after );
+
+  </script>
+  
+  <style>
+    .escape-inner {
+      position: relative;
+      margin-left: .4em;
+    }
+  
+    #escaper_2, .escape-overlap {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    
+    .escape {
+      margin: 0;
+    }
+    
+    @media only screen and (max-width: 30em) {
+      .navbar-brand {
+        margin-right: .3rem;
+      }
+      
+      #dapagetitle {
+        margin-right: .4em;
+      }
+      
+      #dapagetitle .ma_icon {
+        margin-right: 0;
+      }
+      
+      .escape-inner {
+        margin-left: .6em;
+      }
+      
+      #dahelptoggle {
+        padding: 0;
+      }
+    }
+  </style>
+---
+default screen parts:
+  right: ${ escape_button }
 ---
 # Welcome screen
 mandatory: true
