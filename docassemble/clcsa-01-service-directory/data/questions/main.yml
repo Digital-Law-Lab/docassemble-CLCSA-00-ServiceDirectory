@@ -20,14 +20,96 @@ metadata:
   footer: |
     <div style="display: flex;align-items: flex-start;justify-content: center;font-size: 12px;height: 100%;padding: 10px;">
       <div style=" display: flex; height: 100%; align-items: center; line-height: 18px;" class="flindersAttribution">
-        Developed by Flinders University in collaboration with Community Legal Centre South Australia (CLCSA)
+        Developed by Flinders University in collaboration with Community Legal Centres South Australia (CLCSA)
       </div>
       <div style="height: 40px; display: flex; margin-left: 15px;" class="flindersLogo">
         <img src="https://staff.flinders.edu.au/etc.clientlibs/flinders/clientlibs/clientlib-site/resources/images/flinderuni_main_logo_black.png" style="height: 100%;">
       </div>
     </div>
-  exit url: https://www.clcsa.org.au/
-  exit label: Exit to CLCSA Website
+  exit label: ""
+  navigation bar html: |
+    <!-- Adds title to logo -->
+    <span id="apptitle" class="nav navbar-nav d-none d-md-block">CLCSA Service Directory</span>
+    <script>
+      apptitle = document.getElementById('apptitle');
+      nbc = document.getElementById('danavbar-collapse');
+      nbc.insertAdjacentElement('beforeBegin', apptitle);
+    </script>
+
+    <!-- Adds Safe Exit button 
+    <a id="escape" href="https://www.google.com" class="btn btn-warning btn-da">Safe Exit</a>
+    <script>
+
+      // Can't use `let` in here as it exists on the page
+      // multiple times. Could put it in a namespace, I
+      // suppose.
+      // To shorten this code, find a way to access jQuery
+      
+      var doc = document;  // Need space!
+
+      var outer = outer || doc.createElement( 'div' );
+      var inner = inner || doc.createElement( 'div' );
+      outer.appendChild( inner );
+
+      outer.setAttribute( 'class', 'escape-outer' );
+      inner.setAttribute( 'class', 'escape-inner' );
+
+      // Give a unique id to each escaper so we can add only
+      // one per outer/inner pair
+      var suffix = suffix || 1;  // Use `suffix` if it already exists
+      var unique_id = 'escaper_' + suffix;
+      var escaper = doc.getElementById( 'escape' );
+      escaper.setAttribute( 'id', unique_id );
+      inner.appendChild( escaper );
+      
+      if (suffix !== 1) {
+        escaper.classList.add( 'escape-overlap' );
+      }
+      suffix += 1;
+      
+      // Add to navbar
+      var after = doc.getElementById('danavbar-collapse');
+      after.insertAdjacentElement('afterEnd', inner);
+    </script>
+    
+    <style>
+      .escape-inner {
+        position: relative;
+        margin-left: .4em;
+      }
+    
+      #escaper_2, .escape-overlap {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      
+      .escape {
+        margin: 0;
+      }
+      
+      @media only screen and (max-width: 30em) {
+        .navbar-brand {
+          margin-right: .3rem;
+        }
+        
+        #dapagetitle {
+          margin-right: .4em;
+        }
+        
+        #dapagetitle .ma_icon {
+          margin-right: 0;
+        }
+        
+        .escape-inner {
+          margin-left: .6em;
+        }
+        
+        #dahelptoggle {
+          padding: 0;
+        }
+      }
+    </style>
 ---
 objects:
   - CLCSAlogo: DAStaticFile.using(filename='CLCSAlogo_nowords.png')
@@ -39,11 +121,12 @@ features:
   javascript:
     - custom-f2ddd3f2.js
   debug: False
-  hide standard menu: True
+  hide standard menu: False
   progress bar: True
   show progress bar percentage: True
   navigation back button: True
 ---
+mandatory: True
 code: |
   set_parts(logo='<img src="' + CLCSAlogo.url_for() + '" style="height: 60px;">')
 ---
@@ -60,90 +143,6 @@ code: |
     </div>
   """.format(CLCSAlogo.url_for())
   set_parts(logo=logoString)
----
-# Sets Quick Exit button
-id: escape_button_and_its_placement
-template: escape_button
-content: |
-
-  ${ action_button_html("https://google.com", id_tag="escape", classname="escape", label="Quick Exit", color="danger", size="md") }
-
-  <script>
-
-    // Can't use `let` in here as it exists on the page
-    // multiple times. Could put it in a namespace, I
-    // suppose.
-    // To shorten this code, find a way to access jQuery
-    
-    var doc = document;  // Need space!
-
-    var outer = outer || doc.createElement( 'div' );
-    var inner = inner || doc.createElement( 'div' );
-    outer.appendChild( inner );
-
-    outer.setAttribute( 'class', 'escape-outer' );
-    inner.setAttribute( 'class', 'escape-inner' );
-
-    // Give a unique id to each escaper so we can add only
-    // one per outer/inner pair
-    var suffix = suffix || 1;  // Use `suffix` if it already exists
-    var unique_id = 'escaper_' + suffix;
-    var escaper = doc.getElementById( 'escape' );
-    escaper.setAttribute( 'id', unique_id );
-    inner.appendChild( escaper );
-    
-    if (suffix !== 1) {
-      escaper.classList.add( 'escape-overlap' );
-    }
-    suffix += 1;
-    
-    // Add to navbar
-    var after = doc.getElementById( 'damobile-toggler' );
-    after.parentNode.insertBefore( inner, after );
-
-  </script>
-  
-  <style>
-    .escape-inner {
-      position: relative;
-      margin-left: .4em;
-    }
-  
-    #escaper_2, .escape-overlap {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-    
-    .escape {
-      margin: 0;
-    }
-    
-    @media only screen and (max-width: 30em) {
-      .navbar-brand {
-        margin-right: .3rem;
-      }
-      
-      #dapagetitle {
-        margin-right: .4em;
-      }
-      
-      #dapagetitle .ma_icon {
-        margin-right: 0;
-      }
-      
-      .escape-inner {
-        margin-left: .6em;
-      }
-      
-      #dahelptoggle {
-        padding: 0;
-      }
-    }
-  </style>
----
-default screen parts:
-  right: ${ escape_button }
 ---
 # Welcome screen
 mandatory: true

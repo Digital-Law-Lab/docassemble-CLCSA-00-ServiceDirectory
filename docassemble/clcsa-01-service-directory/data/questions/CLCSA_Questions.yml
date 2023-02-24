@@ -21,11 +21,6 @@ fields:
 right: |
   [FILE mapfinal.png, 400px]
 progress: 20
-action buttons:
-  - label: Safe Exit
-    action: http://www.bom.gov.au/sa/forecasts/adelaide.shtml
-    color: warning
-    icon: sign-out-alt
 ---
 question: What type of legal issue do you have?
 subquestion: |
@@ -65,11 +60,6 @@ fields:
         image: other
     none of the above: False
 progress: 40
-action buttons:
-  - label: Safe Exit
-    action: http://www.bom.gov.au/sa/forecasts/adelaide.shtml
-    color: warning
-    icon: sign-out-alt
 ---
 question: What is your gender?
 fields:
@@ -84,11 +74,6 @@ fields:
         image: other
 
 progress: 60
-action buttons:
-  - label: Safe Exit
-    action: http://www.bom.gov.au/sa/forecasts/adelaide.shtml
-    color: warning
-    icon: sign-out-alt
 ---
 question: Do you identify as Aboriginal or Torres Strait Islander?
 fields:
@@ -100,11 +85,6 @@ fields:
       - Do not wish to say
 
 progress: 80
-action buttons:
-  - label: Safe Exit
-    action: http://www.bom.gov.au/sa/forecasts/adelaide.shtml
-    color: warning
-    icon: sign-out-alt
 ---
 images:
   female: female-symbol.png
