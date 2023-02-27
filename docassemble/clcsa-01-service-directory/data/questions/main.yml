@@ -28,13 +28,6 @@ metadata:
     </div>
   exit label: ""
   navigation bar html: |
-    <!-- Adds title to logo -->
-    <span id="apptitle" class="nav navbar-nav d-none d-md-block">CLCSA Service Directory</span>
-    <script>
-      apptitle = document.getElementById('apptitle');
-      nbc = document.getElementById('danavbar-collapse');
-      nbc.insertAdjacentElement('beforeBegin', apptitle);
-    </script>
 
     <!-- Adds Safe Exit button  -->
     <!-- Based on https://docassemble.slack.com/files/UHCKKPY3D/F013TPA5000/escape.yml -->
