@@ -125,6 +125,11 @@ h4 {
   margin-bottom: 0.5em;
 }
 
+.logotext {
+  color: black;
+  white-space: normal;
+}
+
 p { 
   font-family: Cabin, arial, sans-serif;
   color: #58595b;
