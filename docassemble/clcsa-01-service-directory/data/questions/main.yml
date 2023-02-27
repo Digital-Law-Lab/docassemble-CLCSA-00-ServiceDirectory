@@ -26,8 +26,9 @@ metadata:
         <img src="https://staff.flinders.edu.au/etc.clientlibs/flinders/clientlibs/clientlib-site/resources/images/flinderuni_main_logo_black.png" style="height: 100%;">
       </div>
     </div>
-  exit label: ""
-  exit url:  https://clcsa.org.au
+  exit label: "Safe Exit"
+  exit url:  https://google.com
+  exit link: exit
 ---
 objects:
   - CLCSAlogo: DAStaticFile.using(filename='CLCSAlogo_nowords.png')

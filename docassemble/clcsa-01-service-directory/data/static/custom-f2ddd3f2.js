@@ -54,15 +54,27 @@ document.addEventListener('alpine:init', () => {
 });
 
 /*
- * Add Safe Exit button
+ * Place the Safe Exit button outside the toggler
  */
+
 // wrap the code in a daPageLoad trigger so that the code is re-executed when the user navigates from screen to screen
 $(document).on('daPageLoad', function () {
-  // check if button already exists (in which case lenght will be 1), and only add the button if it doesn't exist (length is 0)
-  if ($('#escapeBtn').length == 0) {
-    // add button to the end of the parent nav container
-    $('.danavcontainer').append(
-      '<a id="escapeBtn" href="https://www.google.com" class="btn btn-warning btn-da">Safe Exit</a>'
-    );
+  // get the exit button - the text inside `contains` should match `exit label`.
+  var escapeRef = $('#danavbar-collapse .nav-link:contains(Safe Exit)');
+  escapeRef.parents('.nav-item').remove(); // remove the `li` item for the exit button
+  escapeRef.removeClass('nav-link');
+  escapeRef.attr('id', 'escapeBtn');
+  escapeRef.addClass('btn btn-warning btn-da'); // add classes to make it look like a button
+  // check if the mobile nave has other items
+  if ($('#danavbar-collapse .navbar-nav').children().length == 0) {
+    // the menu only has the exit button so remove it
+    $('#danavbar-collapse').remove();
+    $('#damobile-toggler').remove();
+    // align to the far right
+    escapeRef.addClass('ms-auto');
+  } else {
+    escapeRef.css('margin-left', '10px'); // add space between toggle icon and exit button
   }
+  // add the button to the nav
+  $('.danavcontainer').append(escapeRef);
 });
