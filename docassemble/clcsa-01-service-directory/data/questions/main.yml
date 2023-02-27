@@ -51,13 +51,8 @@ code: |
 ---
 # Welcome screen
 mandatory: true
-question: How to Get Help
+question: Find the Legal Services You Need
 subquestion: |
-  Welcome to the CLCSA Service Directory.
-  Use this app to find the legal services that you need.
-
-  You must agree to the Terms of Use to continue
-  <hr>
 
   <div class="disclaimer_heading">Terms of Use</div>
   <p class="disclaimer_text">
