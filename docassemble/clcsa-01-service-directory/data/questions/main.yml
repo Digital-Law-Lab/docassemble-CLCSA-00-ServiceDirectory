@@ -39,7 +39,7 @@ features:
   javascript:
     - custom-f2ddd3f2.js
   debug: False
-  hide standard menu: False
+  hide standard menu: True
   inverse navbar: False
   progress bar: True
   show progress bar percentage: True
