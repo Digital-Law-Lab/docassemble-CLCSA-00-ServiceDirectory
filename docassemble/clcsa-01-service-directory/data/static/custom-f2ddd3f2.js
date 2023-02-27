@@ -52,3 +52,17 @@ document.addEventListener('alpine:init', () => {
     },
   }));
 });
+
+/*
+ * Add Safe Exit button
+ */
+// wrap the code in a daPageLoad trigger so that the code is re-executed when the user navigates from screen to screen
+$(document).on('daPageLoad', function () {
+  // check if button already exists (in which case lenght will be 1), and only add the button if it doesn't exist (length is 0)
+  if ($('#escapeBtn').length == 0) {
+    // add button to the end of the parent nav container
+    $('.danavcontainer').append(
+      '<a id="escapeBtn" href="https://www.google.com" class="btn btn-warning btn-da">Safe Exit</a>'
+    );
+  }
+});

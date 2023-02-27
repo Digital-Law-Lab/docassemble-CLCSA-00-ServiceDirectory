@@ -27,77 +27,7 @@ metadata:
       </div>
     </div>
   exit label: ""
-  navigation bar html: |
-
-    <!-- Adds Safe Exit button  -->
-    <!-- Based on https://docassemble.slack.com/files/UHCKKPY3D/F013TPA5000/escape.yml -->
-    <a id="escape" href="https://www.google.com" class="btn btn-warning btn-da">Safe Exit</a>
-    <script>
-      var doc = document;  // Need space!
-
-      var outer = outer || doc.createElement( 'div' );
-      var inner = inner || doc.createElement( 'div' );
-      outer.appendChild( inner );
-
-      outer.setAttribute( 'class', 'escape-outer' );
-      inner.setAttribute( 'class', 'escape-inner' );
-
-      // Give a unique id to each escaper so we can add only
-      // one per outer/inner pair
-      var suffix = suffix || 1;  // Use `suffix` if it already exists
-      var unique_id = 'escaper_' + suffix;
-      var escaper = doc.getElementById( 'escape' );
-      escaper.setAttribute( 'id', unique_id );
-      inner.appendChild( escaper );
-      
-      if (suffix !== 1) {
-        escaper.classList.add( 'escape-overlap' );
-      }
-      suffix += 1;
-      
-      // Add to navbar
-      var after = doc.getElementById('danavbar-collapse');
-      after.insertAdjacentElement('afterEnd', inner);
-    </script>
-    
-    <style>
-      .escape-inner {
-        position: relative;
-        margin-left: .4em;
-      }
-    
-      #escaper_2, .escape-overlap {
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-      
-      .escape {
-        margin: 0;
-      }
-      
-      @media only screen and (max-width: 30em) {
-        .navbar-brand {
-          margin-right: .3rem;
-        }
-        
-        #dapagetitle {
-          margin-right: .4em;
-        }
-        
-        #dapagetitle .ma_icon {
-          margin-right: 0;
-        }
-        
-        .escape-inner {
-          margin-left: .6em;
-        }
-        
-        #dahelptoggle {
-          padding: 0;
-        }
-      }
-    </style>
+  exit url:  https://clcsa.org.au
 ---
 objects:
   - CLCSAlogo: DAStaticFile.using(filename='CLCSAlogo_nowords.png')
@@ -117,7 +47,7 @@ features:
 ---
 mandatory: True
 code: |
-  set_parts(logo='<img src="' + CLCSAlogo.url_for() + '" style="height: 60px;">')
+  set_parts(logo='<img src="' + CLCSAlogo.url_for() + '" style="height: 60px;"><span class="d-none d-sm-inline" style="margin-left: 2px;">CLCSA Service Directory</span>')
 ---
 # Welcome screen
 mandatory: true

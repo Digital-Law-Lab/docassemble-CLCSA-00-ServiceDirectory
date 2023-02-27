@@ -200,3 +200,12 @@ body.da-pad-for-footer {
     height: 24px !important;
   }
 }
+
+.navbar-toggler {
+  background-image: none;
+  border-width: 0px;
+}
+
+.navbar-toggler-icon {
+  background-image: none;
+}
