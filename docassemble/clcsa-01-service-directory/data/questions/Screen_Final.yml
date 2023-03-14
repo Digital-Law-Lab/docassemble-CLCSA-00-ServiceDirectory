@@ -1,13 +1,12 @@
 # Final Screen
 event: CLCSA_ScreenFinal
-question: Thank you for completing this application. Here are your responses,
+question: |
+  <span></span>
 subquestion: |
   % for service in CLCSA_matchedServices:
-  % if CLCSA_ManagerStore.get(service.organisationID, service.branchId) is not None:
-  ${ CLCSA_ManagerStore.get(service.organisationID, service.branchId).name }
 
+  ${ repr(service) }
 
-  % endif
   % endfor
 
 progress: 100
@@ -15,3 +14,7 @@ buttons:
   - Exit: exit
     url: http://www.bom.gov.au/sa/forecasts/adelaide.shtml
   - Restart: restart
+script: |
+  <script>
+    $('.da-page-header').css("border-bottom", "none")
+  </script>

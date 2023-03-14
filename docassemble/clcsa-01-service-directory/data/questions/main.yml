@@ -13,5 +13,5 @@ code: |
   initStore
   CLCSA_ScreenWelcome
   driveTheFiltrationProcess()
-  CLCSA_matchedServices = CLCSA_ManagerDirectory.getMatches()
+  CLCSA_matchedServices = CLCSA_ManagerDirectory.getMatchedServices()
   CLCSA_ScreenFinal

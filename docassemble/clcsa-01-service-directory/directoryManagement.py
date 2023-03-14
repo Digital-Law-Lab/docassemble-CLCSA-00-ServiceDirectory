@@ -111,6 +111,27 @@ class MatchedService(MatchMetaData):
     variants: list[MatchedServiceVariant] = field(default_factory=list)
 
 
+@dataclass(slots=True, kw_only=True)
+class MatchedServiceFullVariant(MatchMetaData):
+    branchId: str
+    name: str
+    address: str
+    number: str
+    url: Optional[str] = None
+    logo: Optional[str] = None
+
+
+@dataclass(slots=True, kw_only=True)
+class MatchedServiceFull(MatchedService):
+    name: str
+    address: str
+    url: str | None = None
+    # TODO: implement ContactNumber class and its support
+    number: Optional[str] = None
+    logo: Optional[str] = None
+    variants: list[MatchedServiceFullVariant] = field(default_factory=list)
+
+
 @dataclass(slots=True)
 class ContractsManager:
 
@@ -301,19 +322,23 @@ class ContractsManager:
 
         # it is a close match if there is at least one True value (one condition matches)
         _closeMatch = True in _testResults
-        # it is an exact match only if all conditions match {no False value}
-        _exactMatch = False not in _testResults
+        # get only true conditions for _testResults
+        _truthyConditions = [
+            truthyCondition for truthyCondition in _testResults if truthyCondition]
+        # it is an exact match only if all filters were matched {no condition returned False and the number of truthy conditions matches the filters}
+        _exactMatch = False not in _testResults and (
+            len(_truthyConditions) == len(filtersDict))
 
         # we only save meta data about the service (match) if it was a close or exact match, but not `fallback` or `unrelated`
         if setMetaDataFn is not None and not _serviceDidNotPassSomeHurdles and (_exactMatch or _closeMatch):
-            _passedConditionCount = len(
-                [truthyCondition for truthyCondition in _testResults if truthyCondition])
+            _passedConditionCount = len(_truthyConditions)
             # the strength of the match in relation to the specified conditions - by calculating the percentage of satisfied conditions out of total conditions
             _conditionSatisfaction = int((
                 _passedConditionCount / len(conditionList)) * 100)
             # the strength of the match in relation to the filters - by calculating the percentage of satisfied conditions out of total filters
-            _querySatisfaction = int((_passedConditionCount /
-                                      len(filtersDict.keys())) * 100)
+            _querySatisfaction = int(
+                (_passedConditionCount /
+                 len(filtersDict.keys())) * 100)
             setMetaDataFn(exactMatch=_exactMatch, conditionSatisfaction=_conditionSatisfaction,
                           querySatisfaction=_querySatisfaction)
 
@@ -518,7 +543,66 @@ class ServiceDirectoryManager:
         return self.contractsDossier.filter(self.filters.local_dict)
 
     def getMatches(self) -> list[MatchedService]:
+        """ retrieves a list of match metadata - not the service itself. You should use this with store.get(orgID, BranchID). Or, use `getMatchedServices()` which does this automatically for you.
+
+        Returns:
+            list[MatchedService]: _description_
+        """
         return self.contractsDossier.getMatches()
+
+    def getMatchedServices(self) -> list[MatchedServiceFull]:
+        _matchesMetaData = self.getMatches()
+        _matchesFull: list[MatchedServiceFull] = []
+        for match in _matchesMetaData:
+            # get the actual data for this match
+            _service = self.store.get(match.organisationID, match.branchId)
+
+            # skip if we got nothing. The issue is like invalid id or the store was not updated to the latest version. Otherwise, we sould get something, as serviceContract list is supposed to be constructed in reliance on the data in the store.
+            if _service is None:
+                continue
+
+            _matchConcat = MatchedServiceFull(
+                exactMatch=match.exactMatch,
+                conditionSatisfaction=match.conditionSatisfaction,
+                querySatisfaction=match.querySatisfaction,
+                organisationID=match.organisationID,
+                branchId=match.branchId,
+                name=_service.name,
+                address=_service.address or "Not Available",
+                url=_service.url,
+                # TODO: number could be contractNumber but not used yet
+                number=cast(str, _service.number),
+                logo=_service.logo
+            )
+            if len(match.variants) > 0:
+                # we have variants, get their data
+                for variant in match.variants:
+                    _orgVariant = self.store.get(
+                        match.organisationID, variant.branchId)
+                    # sometimes when the id is wrong we don't get any data from the store, so skip it
+                    if _orgVariant is None:
+                        continue
+
+                    _variantConcat = MatchedServiceFullVariant(
+                        exactMatch=variant.exactMatch,
+                        conditionSatisfaction=variant.conditionSatisfaction,
+                        querySatisfaction=variant.querySatisfaction,
+                        branchId=variant.branchId,
+                        # if None inherit from root org
+                        name=_orgVariant.name or _service.name,
+                        url=_orgVariant.url or _service.url,
+                        address=_orgVariant.address or _service.address or 'Not Available',
+                        # TODO: number could be contractNumber but not used yet
+                        number=cast(
+                            str, _orgVariant.number or _service.number),
+                        logo=_orgVariant.logo or _service.logo
+                    )
+                    # add to the root org
+                    _matchConcat.variants.append(_variantConcat)
+            # add each service to the list of matches
+            _matchesFull.append(_matchConcat)
+        # TODO: add sorting logic, first by query satisfaction, then condition satisfaction
+        return _matchesFull
 
     def getFallbacks(self, serviceStore) -> None:
         return self.contractsDossier.getFallbacks(serviceStore=serviceStore)
@@ -531,3 +615,18 @@ class ServiceDirectoryManager:
 
     def getLookAheadList(self):
         return self.contractsDossier.getLookAheadList()
+
+
+var = ServiceContract(
+    organisationID='OrgSOUTHERNC516583',
+    showIf=[
+        ServiceCondition(
+            TheSelected='location',
+            Is='South'
+        ),
+        ServiceCondition(
+            TheSelected='legalIssue',
+            Is='Other'
+        )
+    ]
+)
