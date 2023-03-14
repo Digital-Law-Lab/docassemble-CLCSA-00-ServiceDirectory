@@ -1,0 +1,228 @@
+---
+modules:
+  - .storeManagement
+  - .directoryManagement
+---
+code: |
+  CLCSA_ManagerDirectory = ServiceDirectoryManager(
+    filters=Filters(),
+    contractsDossier=ContractsManager(originalContracts=_contractsList),
+    store=StoreManager()
+  )
+  CLCSA_ManagerDirectory.store.setStoreFromJsonFile()
+  CLCSA_ManagerStore = CLCSA_ManagerDirectory.store
+  initStore = True
+---
+code: |
+  _contractsList: list[ServiceContract] = [
+    ServiceContract(
+        # Northern Community Legal Service
+        organisationID='OrgNORTHERNC510878',
+        showIf=[
+            ServiceCondition(TheSelected="legalIssue", Is="Other"),
+            ServiceCondition(TheSelected="location", IsNot="North")
+        ]),
+    ServiceContract(
+        # WestSide Lawyers
+        organisationID='OrgWESTSIDEL16',
+        showIf=[
+            ServiceCondition(TheSelected='legalIssue', Is='Other')
+        ],
+        branches=[
+            ServiceContractBranch(
+                # WestSide Lawyers Hindmarsh
+                branchID='OrgWESTSIDEL16-BranchNDMARSH212Por5007',
+                showIf=[
+                    ServiceCondition(
+                        TheSelected='location',
+                        IsEither=['West', 'North', 'Outback']
+                    )
+                ]
+            ),
+            ServiceContractBranch(
+                # WestSide Lawyers Port Pirie
+                branchID='OrgWESTSIDEL16-BranchTPIRIEFlinder5540',
+                showIf=[
+                    ServiceCondition(
+                        TheSelected='location',
+                        IsEither=['West', 'Mid North']
+                    )
+                ]
+            )
+        ]
+    ),
+    ServiceContract(
+        # Consumer Credit Law Centre South Australia
+        organisationID='OrgCONSUMERC500088',
+        showIf=[
+            ServiceCondition(
+                TheSelected='location',
+                IsEither=[
+                    'North',
+                    'South',
+                    'East',
+                    'West',
+                    'Central'
+                ]
+            ),
+            ServiceCondition(
+                TheSelected='legalIssue',
+                Is='Financial'
+            )
+        ],
+        branches=[
+            ServiceContractBranch(
+                # Medindie Gardens SA 5081
+                branchID='OrgCONSUMERC500088-BranchUnit25081',
+                showIf=True,  # TODO: check
+                fold=True
+            ),
+            ServiceContractBranch(
+                # Smithfield SA 5114
+                branchID='OrgCONSUMERC500088-BranchUnit25114',
+                showIf=True,  # TODO: check
+                fold=True
+            ),
+            ServiceContractBranch(
+                # Christies Beach SA 5165
+                branchID='OrgCONSUMERC500088-BranchUnit35165',
+                showIf=True,  # TODO: check
+                fold=True
+            )
+        ]
+    ),
+    ServiceContract(
+        # Family Violence Legal Service Aboriginal Corporation SA
+        organisationID='OrgFAMILYVIO62',
+        showIf=[
+            ServiceCondition(
+                TheSelected='legalIssue',
+                Is='Other'
+            ),
+            ServiceCondition(
+                TheSelected='location',
+                Is='Mid North'
+            ),
+            ServiceCondition(
+                TheSelected='indigenous',
+                IsNot='No'
+            )
+        ],
+        branches=[
+            ServiceContractBranch(
+                # (Port Augusta)
+                branchID='OrgFAMILYVIO62-BranchUGUSTA26Jerv5700',
+                showIf=True,  # TODO: check
+                fold=True
+            ),
+            ServiceContractBranch(
+                # (Port Lincoln)
+                branchID='OrgFAMILYVIO62-BranchINCOLN56StA5606',
+                showIf=True,  # TODO: check
+                fold=True
+            ),
+            ServiceContractBranch(
+                # (Ceduna)
+                branchID='OrgFAMILYVIO62-BranchCEDUNA17McKe5700',
+                showIf=True,  # TODO: check
+                fold=True
+            )
+        ]
+    ),
+    ServiceContract(
+        # Uniting Communities
+        organisationID='OrgUNITINGCO500069',
+        showIf=True,
+        branches=[
+            ServiceContractBranch(
+                # Uniting Communities Law Centre
+                branchID='OrgUNITINGCO500069-BranchCENTRE',
+                showIf=[
+                    ServiceCondition(
+                        TheSelected='legalIssue',
+                        Is='Other'
+                    )
+                ]
+            ),
+            ServiceContractBranch(
+                # Uniting Communities Elder Abuse Unit
+                branchID='OrgUNITINGCO500069-BranchSEUNIT',
+                showIf=[
+                    ServiceCondition(
+                        TheSelected='legalIssue',
+                        Is='Elder Abuse'
+                    ),
+                    ServiceCondition(
+                        TheSelected='location',
+                        Is='Central'
+                    )
+                ]
+            ),
+            ServiceContractBranch(
+                # Uniting Communities Neighbourhood/Communitiy Mediation
+                branchID='OrgUNITINGCO500069-BranchDIATION',
+                showIf=[
+                    ServiceCondition(
+                        TheSelected='legalIssue',
+                        Is='Mediation'
+                    ),
+                    ServiceCondition(
+                        TheSelected='indigenous',
+                        IsNot='Yes'
+                    ),
+                    ServiceCondition(
+                        TheSelected='location',
+                        IsEither=['North', 'East', 'South', 'West', 'Central']
+                    )
+                ]
+            ),
+            ServiceContractBranch(
+                # Uniting Communities Social Security Legal Advice Service
+                branchID='OrgUNITINGCO500069-BranchSERVICE',
+                showIf=[
+                    ServiceCondition(
+                        TheSelected='legalIssue',
+                        Is='Centrelink'
+                    ),
+                    ServiceCondition(
+                        TheSelected='location',
+                        IsEither=['North', 'East', 'South', 'West', 'Central']
+                    )
+                ]
+            )
+        ]
+    )
+    # TODO: add the rest
+  ]
+---
+code: |
+  def driveTheFiltrationProcess():
+    # we need to assume we are in a loop, so every time start with a fresh filters list
+    CLCSA_ManagerDirectory.filters = Filters()
+    # ask first filter question
+    CLCSA_ManagerDirectory.filters.add(
+        Filter(name="legalIssue", value=CLCSA_legalIssue))  # type: ignore
+    # do the initial filtration based on this first question and only ask more question if needed
+    CLCSA_ManagerDirectory.filter()
+    _neededFilters = CLCSA_ManagerDirectory.getLookAheadList()
+    if "location" in _neededFilters:
+      # we need to ask the location question
+      CLCSA_ManagerDirectory.filters.add(
+          Filter(name="location", value=CLCSA_location))  # type: ignore
+      # update look ahead list based on the new answer
+      CLCSA_ManagerDirectory.filter()
+      _neededFilters = CLCSA_ManagerDirectory.getLookAheadList()
+    if "indigenous" in _neededFilters:
+      # we need to ask the indigenous question
+      CLCSA_ManagerDirectory.filters.add(
+          Filter(name="indigenous", value=CLCSA_indigenous))  # type: ignore
+      # update look ahead list based on the new answer
+      CLCSA_ManagerDirectory.filter()
+      _neededFilters = CLCSA_ManagerDirectory.getLookAheadList()
+    if "gender" in _neededFilters:
+      # we need to ask the gender question
+      CLCSA_ManagerDirectory.filters.add(
+          Filter(name="gender", value=CLCSA_gender))  # type: ignore
+      # update look ahead list based on the new answer
+      CLCSA_ManagerDirectory.filter()
+      _neededFilters = CLCSA_ManagerDirectory.getLookAheadList()

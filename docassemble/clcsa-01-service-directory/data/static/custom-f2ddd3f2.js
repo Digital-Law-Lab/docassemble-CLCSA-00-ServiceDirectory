@@ -21,16 +21,16 @@ document.addEventListener('alpine:init', () => {
       document.querySelector('.dafieldpart').classList.add('visually-hidden');
       let _optList = [];
 
-      // for each checkbox item get the lable, image src, and index number
+      // for each checkbox item get the lable, image src, checked state, and index number
       document
         .querySelectorAll('.da-field-checkboxes label')
         .forEach((el, index) => {
           _optList.push({
-            label: el
-              .querySelector('span.labelauty-unchecked')
-              .innerText.trim(),
+            label: el.innerText.trim(),
             img: el.querySelector('span.labelauty-unchecked > img').src,
             index: index,
+            checked: !!document.querySelector('input#' + el.getAttribute('for'))
+              .checked,
           });
         });
 
