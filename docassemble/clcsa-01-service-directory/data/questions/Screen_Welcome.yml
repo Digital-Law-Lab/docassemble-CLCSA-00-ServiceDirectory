@@ -3,7 +3,7 @@ continue button field: CLCSA_ScreenWelcome
 question: Find the Legal Services You Need
 subquestion: |
 
-  <div class="disclaimer_heading">Terms of Use</div>
+  <h6 class="disclaimer_heading">Terms of Use</h6>
   <p class="disclaimer_text">
   This application does not provide you with legal advice, nor should you consider
   any legal service recommended by this application as an endorsement of that service.
@@ -18,8 +18,8 @@ subquestion: |
   <p class="disclaimer_text">
   You should only continue if you agree to these terms.
   </p>
-  <hr>
+
 buttons:
-  - I agree: continue
   - No thanks: exit
     url: http://www.bom.gov.au/sa/forecasts/adelaide.shtml
+  - I agree: continue

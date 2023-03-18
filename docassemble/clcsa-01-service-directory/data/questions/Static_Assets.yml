@@ -13,4 +13,4 @@ images:
   centrelink: centrelink.svg
 ---
 objects:
-  - CLCSAlogo: DAStaticFile.using(filename='CLCSAlogo_nowords.png')
+  - CLCSAlogo: DAStaticFile.using(filename='CLCSA_logo.svg')

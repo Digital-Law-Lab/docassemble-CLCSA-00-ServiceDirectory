@@ -7,103 +7,38 @@
   color: rgb(0, 0, 0) !important;
 }
 
-/* dropdown-menu manages the right-hand menu (where we access the Playground
-   amongst other things) */
-.navbar .dropdown-menu {
-  /*  the rgba() function works just like rgb in that
-        it sets a colour.  But the fourth element sets an
-        'alpha' or transaparency value.  Here we are saying
-        to set the transparency to 30%
-    */
-  background-color: rgba(25, 64, 86, 0.3);
-}
-
-/* Sets properties for when hovering over a menu item in the 
-   drop-down menu */
-.dropdown-item:hover {
-  background-color: rgba(255, 211, 0, 0.5);
-}
-
 /* Line below the navbar*/
 .navbar {
   border-bottom: 8px solid rgba(44, 84, 143);
   padding: 0px !important;
 }
 
-/* adjusting navbar height */
-.da-pad-for-navbar {
-  padding-top: 80px;
-}
-.da-top-for-navbar {
-  top: 180px;
-}
-
-/* Sets the appearnce for the 'Continue' button... */
-.btn-primary {
-  color: rgb(255, 255, 255);
-  background-color: rgb(25, 64, 86);
-  border-color: rgb(0, 0, 0);
-}
-
-/* ...and when hovering over it */
-.btn-primary:hover {
-  color: rgb(0, 0, 0);
-  background-color: rgba(151, 201, 255, 0.3);
-  border-color: rgb(0, 0, 0);
-}
-/* Appearance of 'Safe-Exit' button */
-.btn-warning {
-  color: rgb(255, 255, 255);
-  background-color: rgb(241, 195, 3);
-  border-color: rgb(0, 0, 0);
-}
-
-/* ...and when hovering over it */
-.btn-warning:hover {
-  color: rgb(255, 255, 255);
-  background-color: rgb(44, 84, 143);
-  border-color: rgb(50, 50, 50);
-}
-
-/* Appearance of 'Exit' button */
-.btn-danger {
-  color: rgb(255, 255, 255);
-  background-color: #424242;
-  border-color: rgb(0, 0, 0);
-  font-family: Cabin, arial, sans-serif;
-}
-
 /* Back button on Navbar */
-.navbar-brand {
+/* .navbar-brand {
   font-family: Cabin, arial, sans-serif;
   font-size: 15px;
   margin: 3px;
   padding: 3px;
-}
+} */
 
-/* font colours and style */
+/* font colours and style
 .row {
-  color: #2c548f;
-  font-family: Arial;
+  font-family: 'Poppins', sans-serif;
 }
 
 .da-subquestion {
   font-size: 20px;
-}
+} */
 
-h1 {
+/* h1 {
   font-family: Cabin, arial, sans-serif;
   font-size: 20px;
   font-weight: 400;
   line-height: 20px;
   text-align: center;
-}
+} */
 
-.btn-light {
-  color: #2f8291;
-}
-
-h2 {
+/* h2 {
   color: black;
 }
 
@@ -113,16 +48,17 @@ h4 {
   font-weight: 400;
   line-height: 20px;
   text-align: center;
-}
+} */
 
-.disclaimer_heading {
+/* .disclaimer_heading {
   font-size: 12pt;
   text-align: left;
-}
+} */
 
 .disclaimer_text {
-  font-size: 9pt;
-  margin-bottom: 0.5em;
+  /* font-size: 9pt;
+  margin-bottom: 0.5em; */
+  text-align: justify;
 }
 
 .logotext {
@@ -130,7 +66,7 @@ h4 {
   white-space: normal;
 }
 
-p {
+/* p {
   font-family: Cabin, arial, sans-serif;
   color: #58595b;
   font-size: 15px;
@@ -145,17 +81,17 @@ strong {
   font-weight: 400;
   line-height: 20px;
   text-align: center;
-}
+} */
 
 /* Progress Bar */
-.progress-bar {
+/* .progress-bar {
   background-color: rgb(44, 84, 143);
   font-family: Cabin, arial, sans-serif;
   color: rgb(0, 0, 0);
-}
+} */
 
 /* Service Font */
-th {
+/* th {
   font-family: Cabin, arial, sans-serif;
   color: #58595b;
   font-size: 20px;
@@ -171,15 +107,15 @@ td {
   font-weight: 400;
   line-height: 20px;
   text-align: center;
-}
+} */
 
 /* Line Height */
-li {
+/* li {
   line-height: 1.5;
-}
+} */
 
+/* Customise built-in footer */
 footer.dafooter {
-  height: 120px !important;
   background-color: inherit !important;
 }
 footer.dafooter > div.container {
@@ -190,17 +126,385 @@ footer.dafooter > div.container {
 }
 
 body.da-pad-for-footer {
-  margin-bottom: 120px !important;
+  margin-bottom: 0px !important;
 }
 
-@media only screen and (max-width: 340px) {
-  /* For mobile phones: */
-  footer.dafooter .flindersAttribution {
-    align-items: start !important;
-    line-height: 18px !important;
-    font-size: 10px;
+body.dabody {
+  border: 0;
+  margin: 0;
+  padding-bottom: 0px !important;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  min-height: 100vh;
+  align-items: stretch;
+}
+
+/* END - Customise built-in footer */
+
+/* replace dabody */
+#dll_mainSection {
+  /* flex: 1; */
+  max-width: 600px;
+  width: 76%;
+}
+
+/* hide original footer and nav */
+#dabody .danavbarcontainer,
+#dabody footer {
+  display: none;
+}
+
+/* override defaults */
+.row {
+  justify-content: center;
+}
+
+/* #daquestion > #daform {
+  background: #fff;
+  padding: 40px 58px;
+  border: 1px transparent;
+  border-radius: 15px;
+  filter: drop-shadow(0px 0px 12px rgb(0 0 0 / 0.1));
+} */
+
+#daquestion .progress {
+  display: none;
+}
+
+#dll_progressBar {
+  display: flex;
+  height: 0.25rem;
+  overflow: hidden;
+  line-height: 0;
+  font-size: 0.75rem;
+  background-color: #e9ecef;
+  border-radius: 5px;
+  margin: 28px 15px;
+}
+
+#dll_progressBar .progress-bar {
+  /* also hidden with js */
+  /* background-image: linear-gradient(to right, #ed82ab, #2c548f); */
+  /* background-image: linear-gradient(to right, #ed8282, #2c548f); */
+  background-image: linear-gradient(to right, #ed84ec, #2b9ae7);
+  /* background-image: linear-gradient(to right, #82d4ed, #2c548f); */
+
+  content-visibility: hidden;
+}
+
+.da-page-header {
+  padding-bottom: 0px;
+  margin: 0px 0px 18px 0px;
+  border-bottom: 0px;
+}
+
+#CLCSA_navbar {
+  max-width: 1200px;
+  width: 90%;
+  align-self: center;
+}
+
+#CLCSA_navbar-container {
+  margin: 26px 32px 40px 32px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 32px;
+  justify-content: space-between;
+}
+
+.da-pad-for-navbar {
+  padding-top: 0px;
+}
+
+.DLL_btn-danger-text {
+  color: var(--bs-red);
+  font-weight: 800;
+  text-transform: uppercase;
+  display: inline-flex;
+  gap: 6px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  font-family: 'Ubuntu';
+  justify-content: space-between;
+  padding: 0px;
+}
+
+/* footer */
+#DLL_attribution-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  height: fit-content;
+  padding: 28px 10px;
+  margin-top: 40px;
+}
+
+#DLL_attribution-text {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  line-height: 18px;
+  letter-spacing: 0.75px;
+}
+
+#DLL_attribution-logo {
+  height: 11vw;
+  display: flex;
+  max-height: 35px;
+  margin-left: 15px;
+}
+
+/* improve spinner */
+#daSpinner {
+  z-index: 100;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  top: 0px;
+  background: rgb(159 191 213 / 15%);
+  backdrop-filter: blur(4px);
+}
+div.da-spinner-container {
+  margin-top: 0;
+}
+
+/* override question section - hidden by default and then animated in*/
+#daform {
+  opacity: 0;
+  transition: opacity .5s;
+}
+#dabody {
+  /* display: none; */
+  content-visibility: hidden;
+  flex: 1;
+}
+/* override question font size */
+#daquestion,
+#dll_questionSect {
+  font-size: 1rem;
+}
+#daquestion .h3,
+h3,
+#dll_questionSect .h3 {
+  font-size: 1.35rem;
+}
+
+#daquestion .da-subquestion,
+#dll_questionSect .da-subquestion {
+  font-size: 0.8rem;
+  color: var(--bs-gray-600);
+}
+
+input.labelauty + label {
+  font-size: 0.8rem;
+}
+
+/* style the question card */
+#dll_questionCards {
+  display: grid;
+  justify-items: stretch;
+  align-items: stretch;
+  justify-content: center;
+  align-content: stretch;
+  grid-template-columns: 1fr;
+  margin-bottom: 38px;
+}
+
+#dll_questionCard {
+  background: #fdfeff;
+  padding: 40px 58px 8px 58px;
+  border: 1px transparent;
+  border-radius: 1rem;
+  filter: drop-shadow(0px 0px 10px rgb(44 84 143/ 0.1));
+}
+
+/* for 768px and smaller */
+@media only screen and (max-width: 768px) {
+  #dll_questionCard {
+    padding: 40px 30px 8px 30px;
   }
-  footer.dafooter .flindersLogo {
-    height: 24px !important;
-  }
+}
+
+/* stack the cards */
+#dll_questionCard {
+  grid-area: 1/1;
+}
+
+#dll_questionCard:not(:first-child) {
+  width: 90%;
+  transform: translateY(12px);
+  justify-self: center;
+}
+#dll_questionCard:first-child {
+  z-index: 2;
+}
+
+.da-field-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 26px;
+}
+
+/* style box selection */
+#dll_multiBox_container {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  display: grid;
+  grid-auto-flow: row;
+  gap: 1rem;
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(var(--dll-box-min-width), auto)
+  );
+}
+
+.dll_multiBox_multi_line {
+  --dll-box-min-width: 130px;
+}
+
+.dll_multiBox_single_line {
+  --dll-box-min-width: 150px;
+}
+
+#dll_multiBox_item.dll_multiBox_item_flex {
+  display: flex;
+  min-width: 130px;
+  flex: 1;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-radius: 0.7rem;
+  padding: 0.2rem 1rem;
+  flex-wrap: nowrap;
+}
+.dll_multiBox_item_flex #dll_multiBox_item_checkmark {
+  margin: 0;
+}
+
+#dll_multiBox_item {
+  display: flex;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 0.7rem;
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--bs-gray-400);
+  --tw-border-opacity: 0.6;
+  background-color: #f8fafc0d;
+  padding: 0.2rem;
+  font-size: 0.8rem;
+  line-height: 1.5rem;
+  --tw-text-opacity: 1;
+  color: rgb(30 41 59 / var(--tw-text-opacity));
+  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  --tw-shadow-color: rgb(100 116 139 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+  flex-wrap: nowrap;
+}
+
+#dll_multiBox_item:hover {
+  background-color: #f5faff;
+}
+#dll_multiBox_item.selected {
+  background-color: #eff7ff;
+  border-color: #0870b7;
+  --tw-text-opacity: 1;
+  /* color: rgb(241 245 249 / var(--tw-text-opacity)); */
+}
+#dll_multiBox_item.selected:hover {
+  --tw-bg-opacity: 1;
+  background-color: #fafcff;
+}
+#dll_multiBox_item_label {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+#dll_multiBox_item_label_more {
+  position: relative;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  display: inline-block;
+}
+#dll_multiBox_item_label_more:hover {
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity));
+}
+#dll_multiBox_item_label_more #moreDetail {
+  position: absolute;
+  top: 1.25rem;
+  display: none;
+  width: -moz-fit-content;
+  width: fit-content;
+  min-width: 150px;
+  border-radius: 0.125rem;
+  border-style: solid;
+  --tw-border-opacity: 1;
+  border-color: rgb(191 219 254 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  padding: 0.75rem;
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+#dll_multiBox_item_label_more #moreDetail[data-show] {
+  display: block;
+}
+#dll_multiBox_item_label_more #moreBtn {
+  width: 1.25rem;
+}
+#dll_multiBox_item_img {
+  width: 2.2rem;
+  padding-bottom: 0.75rem;
+}
+
+#dll_multiBox_item_checkmark {
+  width: 1.1rem;
+  color: var(--bs-gray-400);
+  align-self: end;
+  margin: 0 4px;
+}
+
+#dll_multiBox_item_checkmark.checked {
+  color: #086fb6;
+}
+
+#tailwindApp .h-auto {
+  height: auto;
+}
+#tailwindApp .w-5\/6 {
+  width: 83.333333%;
+}
+#tailwindApp .w-full {
+  width: 100%;
+}
+#tailwindApp .border-2 {
+  border-width: 2px;
+}
+#tailwindApp .border-solid {
+  border-style: solid;
+}
+#tailwindApp .border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
