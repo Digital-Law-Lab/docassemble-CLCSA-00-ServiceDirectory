@@ -1,8 +1,9 @@
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, is_dataclass
 from collections.abc import Callable
-from typing import Optional, cast
+from typing import Any, Optional, cast, get_args, get_origin, get_type_hints
 from . import storeManagement
-from docassemble.base.util import DAList, DADict  # type: ignore
+from docassemble.base.util import DAList, DADict, DAStaticFile  # type: ignore
+
 # from docassemble.base.error import DAError
 
 
@@ -100,20 +101,20 @@ class FilteredServiceContract(ServiceContract):
 
 @dataclass(slots=True, kw_only=True)
 class MatchedServiceVariant(MatchMetaData):
-    branchId: str
+    branchID: str
 
 
 @dataclass(slots=True, kw_only=True)
 class MatchedService(MatchMetaData):
     organisationID: str  # type: ignore
-    branchId: Optional[str] = None
+    branchID: Optional[str] = None
     # when a branch is folded, it is appended to this list, so it could be displayed nested within the root org
     variants: list[MatchedServiceVariant] = field(default_factory=list)
 
 
 @dataclass(slots=True, kw_only=True)
 class MatchedServiceFullVariant(MatchMetaData):
-    branchId: str
+    branchID: str
     name: str
     address: str
     number: str
@@ -132,11 +133,33 @@ class MatchedServiceFull(MatchedService):
     variants: list[MatchedServiceFullVariant] = field(default_factory=list)
 
 
+def convertContractListToDataclassList(cls, data):
+    if type(data) is str:
+        return data
+    if isinstance(data, (tuple, list)):
+        if is_dataclass(cls):
+            fieldtype = cls
+        else:
+            fieldtype = [arg for arg in get_args(
+                cls) if get_origin(arg) is list]
+            fieldtype = fieldtype[0].__args__[
+                0] if len(fieldtype) > 0 else list
+        if isinstance(data[0], dict) and data[0].get("ID", None) is not None:
+            return {i["ID"]: convertContractListToDataclassList(fieldtype, i) for i in data}
+        return [convertContractListToDataclassList(fieldtype, i) for i in data]
+    if isinstance(data, dict):
+        if is_dataclass(cls):
+            fieldtypes = get_type_hints(cls)
+            return cls(**{k: convertContractListToDataclassList(fieldtypes[k], data[k]) for k in data})
+    return data
+
+
 @dataclass(slots=True)
 class ContractsManager:
 
     # originalContracts contains a list of serviceContracts which determine if the service should be listed or filtered out.
-    originalContracts: list[ServiceContract]
+    originalContracts: list[ServiceContract] = field(
+        default_factory=list)
 
     _filteredContracts: list[FilteredServiceContract] = field(
         default_factory=list)
@@ -158,6 +181,21 @@ class ContractsManager:
 
     def add(self, contract: ServiceContract):
         self.originalContracts.append(contract)
+
+    def initContractList(self, filename: str = 'serviceContracts.json'):
+        _tempContractList: list[ServiceContract] = []
+        # convert JSON to Python list
+        import json
+
+        _jsonFile = DAStaticFile('servicelistfile', filename=filename)
+        _jsonText: str = _jsonFile.slurp()
+
+        _parsedContractList: list[Any] = json.loads(_jsonText)
+        _convertToDict = convertContractListToDataclassList(
+            ServiceContract, _parsedContractList)
+        _tempContractList = _convertToDict if isinstance(
+            _convertToDict, list) else []
+        self.originalContracts = _tempContractList
 
     def _initSpecificServiceList(self):
         # initialise the list if empty and only regenerate if new contract had been added after last initialisation
@@ -381,9 +419,13 @@ class ContractsManager:
         # generate the list of specific service from which we are going to compute the generic service list later. Only do this once
         self._initSpecificServiceList()
 
+        # every time we filter we recreate the look ahead list, so that we don't ask questions filtered out
+        self._lookAheadFilters = set()
+
         _tempFilteredContracts: list[FilteredServiceContract] = []
 
-        for contract in self.originalContracts:
+        _tempOriginalContracts = self.originalContracts.copy()
+        for contract in _tempOriginalContracts:
             # for testing purposed a service can be hidden by setting showIf to false, in which case we skip that service.
             if type(contract.showIf) is bool and contract.showIf == False:
                 continue
@@ -503,7 +545,7 @@ class ContractsManager:
                 if branch.fold:
                     # branch should remain nested
                     _multiLocationsService.variants.append(MatchedServiceVariant(
-                        branchId=branch.branchID,
+                        branchID=branch.branchID,
                         exactMatch=branch.metaData.exactMatch,
                         querySatisfaction=branch.metaData.querySatisfaction,
                         conditionSatisfaction=branch.metaData.conditionSatisfaction
@@ -512,7 +554,7 @@ class ContractsManager:
 
                 # Org has branches. Branch should be spread. Ignore the root org and only add the branches as services.
                 _tempMatchedServices.append(MatchedService(
-                    organisationID=contract.organisationID, branchId=branch.branchID, exactMatch=branch.metaData.exactMatch, querySatisfaction=branch.metaData.querySatisfaction, conditionSatisfaction=branch.metaData.conditionSatisfaction))
+                    organisationID=contract.organisationID, branchID=branch.branchID, exactMatch=branch.metaData.exactMatch, querySatisfaction=branch.metaData.querySatisfaction, conditionSatisfaction=branch.metaData.conditionSatisfaction))
             if len(_multiLocationsService.variants) > 0:
                 # add the multi location service
                 _tempMatchedServices.append(_multiLocationsService)
@@ -543,7 +585,7 @@ class ServiceDirectoryManager:
         return self.contractsDossier.filter(self.filters.local_dict)
 
     def getMatches(self) -> list[MatchedService]:
-        """ retrieves a list of match metadata - not the service itself. You should use this with store.get(orgID, BranchID). Or, use `getMatchedServices()` which does this automatically for you.
+        """ retrieves a list of match metadata - not the service itself. You should use this with store.get(orgID, branchID). Or, use `getMatchedServices()` which does this automatically for you.
 
         Returns:
             list[MatchedService]: _description_
@@ -555,7 +597,7 @@ class ServiceDirectoryManager:
         _matchesFull: list[MatchedServiceFull] = []
         for match in _matchesMetaData:
             # get the actual data for this match
-            _service = self.store.get(match.organisationID, match.branchId)
+            _service = self.store.get(match.organisationID, match.branchID)
 
             # skip if we got nothing. The issue is like invalid id or the store was not updated to the latest version. Otherwise, we sould get something, as serviceContract list is supposed to be constructed in reliance on the data in the store.
             if _service is None:
@@ -566,7 +608,7 @@ class ServiceDirectoryManager:
                 conditionSatisfaction=match.conditionSatisfaction,
                 querySatisfaction=match.querySatisfaction,
                 organisationID=match.organisationID,
-                branchId=match.branchId,
+                branchID=match.branchID,
                 name=_service.name,
                 address=_service.address or "Not Available",
                 url=_service.url,
@@ -578,7 +620,7 @@ class ServiceDirectoryManager:
                 # we have variants, get their data
                 for variant in match.variants:
                     _orgVariant = self.store.get(
-                        match.organisationID, variant.branchId)
+                        match.organisationID, variant.branchID)
                     # sometimes when the id is wrong we don't get any data from the store, so skip it
                     if _orgVariant is None:
                         continue
@@ -587,7 +629,7 @@ class ServiceDirectoryManager:
                         exactMatch=variant.exactMatch,
                         conditionSatisfaction=variant.conditionSatisfaction,
                         querySatisfaction=variant.querySatisfaction,
-                        branchId=variant.branchId,
+                        branchID=variant.branchID,
                         # if None inherit from root org
                         name=_orgVariant.name or _service.name,
                         url=_orgVariant.url or _service.url,
@@ -615,18 +657,3 @@ class ServiceDirectoryManager:
 
     def getLookAheadList(self):
         return self.contractsDossier.getLookAheadList()
-
-
-var = ServiceContract(
-    organisationID='OrgSOUTHERNC516583',
-    showIf=[
-        ServiceCondition(
-            TheSelected='location',
-            Is='South'
-        ),
-        ServiceCondition(
-            TheSelected='legalIssue',
-            Is='Other'
-        )
-    ]
-)

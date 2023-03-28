@@ -9,6 +9,7 @@ code: |
     contractsDossier=ContractsManager(originalContracts=_contractsList),
     store=StoreManager()
   )
+
   CLCSA_ManagerDirectory.store.setStoreFromJsonFile()
   CLCSA_ManagerStore = CLCSA_ManagerDirectory.store
   initStore = True

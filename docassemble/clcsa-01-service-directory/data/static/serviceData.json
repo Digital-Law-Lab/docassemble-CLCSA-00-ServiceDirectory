@@ -8,21 +8,21 @@
     "branches": [
       {
         "ID": "OrgCONSUMERC500088-BranchUnit25081",
-        "name": "Consumer Credit Law Centre South Australia",
+        "name": "Medindie Gardens Office",
         "address": "Unit 2 59 Main North Road, Medindie Gardens SA 5081",
         "number": "(08) 8342 1800",
         "url": "http://consumercreditsa.org"
       },
       {
         "ID": "OrgCONSUMERC500088-BranchUnit25114",
-        "name": "Consumer Credit Law Centre South Australia",
+        "name": "Smithfield Office",
         "address": "Unit 2, 2B Morialta Drive, Smithfield SA 5114",
         "number": "(08) 8342 1800",
         "url": "http://consumercreditsa.org"
       },
       {
         "ID": "OrgCONSUMERC500088-BranchUnit35165",
-        "name": "Consumer Credit Law Centre South Australia",
+        "name": "Christies Beach Office",
         "address": "Unit 3, 107 Dyson Road, Christies Beach SA 5165",
         "number": "(08) 8342 1800",
         "url": "http://consumercreditsa.org"
@@ -43,21 +43,21 @@
     "branches": [
       {
         "ID": "OrgFAMILYVIO62-BranchUGUSTA26Jerv5700",
-        "name": "Family Violence Legal Service Aboriginal Corporation SA (Port Augusta)",
+        "name": "Port Augusta Office",
         "address": "26 Jervois Street Port Augusta SA 5700",
         "number": "Freecall 1800 111 052 or Telephone (08) 8641 2195",
         "url": "http://www.fvlsac.org.au"
       },
       {
         "ID": "OrgFAMILYVIO62-BranchINCOLN56StA5606",
-        "name": "Family Violence Legal Service Aboriginal Corporation SA (Port Lincoln)",
+        "name": "Port Lincoln Office",
         "address": "56 St Andrews Terrace Port Lincoln SA 5606",
         "number": " Freecall 1800 309 912 or Telephone (08) 8683 1896",
         "url": "http://www.fvlsac.org.au"
       },
       {
         "ID": "OrgFAMILYVIO62-BranchCEDUNA17McKe5700",
-        "name": "Family Violence Legal Service Aboriginal Corporation SA (Ceduna)",
+        "name": "Ceduna Office",
         "address": "17 McKenzie Street Ceduna SA 5700",
         "number": "Freecall 1800 839 059 or Telephone (08) 8625 3800",
         "url": "http://www.fvlsac.org.au"

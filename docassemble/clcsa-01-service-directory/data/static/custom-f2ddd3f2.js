@@ -5,13 +5,6 @@ $('head').append(
   )[0]
 );
 
-// insert Alpine into head with defer
-$('head').append(
-  $(
-    '<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>'
-  )[0]
-);
-
 // add custom navbar and footer
 $('body').prepend(
   '<nav id="CLCSA_navbar"><div id="CLCSA_navbar-container"><div id="CLCSA_logo"></div><div id="CLCSA_btns"></div></div></nav>'
@@ -58,7 +51,7 @@ $('body').append(
   $('#dabody footer').removeClass('dafooter').css('opacity', '0')[0]
 );
 
-// add the progress bar - we added once and then update the value as we proceed
+// add the progress bar - we add it once and then update the value as we proceed
 $('#CLCSA_navbar').after(
   '<div id="dll_mainSection" class="col-lg-10 container"></div>'
 );
@@ -72,7 +65,7 @@ var _initialPageLoad = true;
 // perform the following for every page
 $(document).on('daPageLoad', function () {
   let _isLastPage = false;
-  // update progress bar
+  // update progress bar every time we proceed through the interview
   if ($('#daquestion .progress').length > 0) {
     $('#dll_progressBar').attr(
       'aria-valuenow',
@@ -98,21 +91,22 @@ $(document).on('daPageLoad', function () {
   ).wrapAll(
     "<div id='dll_questionCards'><div id='dll_questionCard'></div></div>"
   );
+  // hide the bg when dll_noQuesitonCardBg is true
+  if (typeof dll_noQuestionCardBg != 'undefined') {
+    $('#dll_questionCards #dll_questionCard').addClass('dll_questionCard_noBg');
+  }
   // add empty card for stack effect
   if (!_isLastPage)
     $('#dll_questionCards').append("<div id='dll_questionCard'></div>");
 
-  // start alpine again
-  if (typeof Alpine != 'undefined') {
-    Alpine.start();
-  }
   // animate in questions
   setTimeout(() => {
+    // make the body visible
     $('#dabody').css('content-visibility', 'visible');
     var tl = anime.timeline({
       easing: 'easeInOutSine',
     });
-    // only animate at first start up
+    // only animate logo and footer at first start up
     if (_initialPageLoad) {
       tl.add({
         targets: '#CLCSA_logo',
@@ -203,6 +197,14 @@ $(document).on('daPageLoad', function () {
 
     _initialPageLoad = false;
   }, 100);
+
+  // start alpine again
+  if (typeof Alpine != 'undefined') {
+    Alpine.start();
+  }
+
+  // fix previous pages being displayed without bg after reaching last page
+  dll_noQuestionCardBg = undefined;
 });
 
 // turn radio checkboxes into a single box selecion
@@ -228,18 +230,17 @@ function boxSelectRadio() {
       let _optList = [];
 
       // for each checkbox item get the lable, image src, checked state, and index number
-      document
-        .querySelectorAll('.da-field-radio label')
-        .forEach((el, index) => {
-          _optList.push({
-            label: el.innerText.trim(),
-            for: el.getAttribute('for'),
-            img: el.querySelector('span.labelauty-unchecked > img')?.src ?? '',
-            index: index,
-            checked: !!document.querySelector('input#' + el.getAttribute('for'))
-              .checked,
-          });
+      $('.da-field-radio label').each(function (index, el) {
+        console.log('element is', el);
+        _optList.push({
+          label: $(this).find('.labelauty-unchecked').text(),
+          for: $(this).attr('for'),
+          img:
+            $(this).find('span.labelauty-unchecked > img')?.attr('src') ?? '',
+          index: index,
+          checked: $('input#' + $(this).attr('for')).is(':checked'),
         });
+      });
 
       // update the new box list
       this.items = _optList;
@@ -281,18 +282,17 @@ function boxSelectMulti() {
       let _optList = [];
 
       // for each checkbox item get the lable, image src, checked state, and index number
-      document
-        .querySelectorAll('.da-field-checkboxes label')
-        .forEach((el, index) => {
-          _optList.push({
-            label: el.innerText.trim(),
-            for: el.getAttribute('for'),
-            img: el.querySelector('span.labelauty-unchecked > img').src,
-            index: index,
-            checked: !!document.querySelector('input#' + el.getAttribute('for'))
-              .checked,
-          });
+      $('.da-field-checkboxes label').each(function (index, el) {
+        console.log('element is', el);
+        _optList.push({
+          label: $(this).find('.labelauty-unchecked').text(),
+          for: $(this).attr('for'),
+          img:
+            $(this).find('span.labelauty-unchecked > img')?.attr('src') ?? '',
+          index: index,
+          checked: $('input#' + $(this).attr('for')).is(':checked'),
         });
+      });
 
       // update the new box list
       this.items = _optList;
@@ -312,3 +312,10 @@ function boxSelectMulti() {
     },
   };
 }
+
+// insert Alpine into head with defer
+$('head').append(
+  $(
+    '<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>'
+  )[0]
+);
