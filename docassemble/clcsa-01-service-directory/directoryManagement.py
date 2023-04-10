@@ -52,9 +52,9 @@ class ServiceCondition:
 @dataclass(slots=True)
 class __ServiceContractBase:
     """ 
-        Filteration is carried out in two stages. The first stage filters the organisations. The second stage filters the branches.
+        Filtration is carried out in two stages. The first stage filters the organisations. The second stage filters the branches.
 
-        If an organisation is excluded, the filteration process will conclude for that org and its branches will not be considered.  
+        If an organisation is excluded, the filtration process will conclude for that org and its branches will not be considered.  
     """
     # pass a list of conditions that will determine whether to exclude this item or not
     # or pass a boolean to always show (true) or never show (false). You must not True if no branch is provided. False can only be used for testing.

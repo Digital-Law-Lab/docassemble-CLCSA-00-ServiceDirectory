@@ -7,7 +7,7 @@ include:
   - Config_Store.yml
   - Static_Assets.yml
   - Screen_Welcome.yml
-  - Filteration_Layers.yml
+  - Filtration_Layers.yml
   - Screen_Final.yml
 ---
 mandatory: True
