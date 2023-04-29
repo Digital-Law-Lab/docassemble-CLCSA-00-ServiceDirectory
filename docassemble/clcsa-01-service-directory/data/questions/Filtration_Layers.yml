@@ -140,10 +140,10 @@ fields:
   - no label: CLCSA_gender
     datatype: radio
     choices:
-      - 'Male': Male
-        image: male
       - 'Female': Female
         image: female
+      - 'Male': Male
+        image: male
       - 'Other': Other
         image: other
 
