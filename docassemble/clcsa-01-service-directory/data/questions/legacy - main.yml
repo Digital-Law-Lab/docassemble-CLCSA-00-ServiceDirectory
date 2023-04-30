@@ -6,7 +6,7 @@ include:
 ---
 metadata:
   title: |
-    Community Legal Centres South Australia
+    CLCSA Service Directory
   short title: |
     CLCSA
   authors:
@@ -20,17 +20,18 @@ metadata:
   footer: |
     <div style="display: flex;align-items: flex-start;justify-content: center;font-size: 12px;height: 100%;padding: 10px;">
       <div style=" display: flex; height: 100%; align-items: center; line-height: 18px;" class="flindersAttribution">
-        Developed by Flinders University in collaboration with Community Legal Centre South Australia (CLCSA)
+        Developed by Flinders University in collaboration with Community Legal Centres South Australia (CLCSA)
       </div>
       <div style="height: 40px; display: flex; margin-left: 15px;" class="flindersLogo">
         <img src="https://staff.flinders.edu.au/etc.clientlibs/flinders/clientlibs/clientlib-site/resources/images/flinderuni_main_logo_black.png" style="height: 100%;">
       </div>
     </div>
-  exit url: https://www.clcsa.org.au/
-  exit label: Exit to CLCSA Website
+  exit label: 'Safe Exit'
+  exit url: https://google.com
+  exit link: exit
 ---
 objects:
-  - CLCSAlogo: DAStaticFile.using(filename='CLCSA_logo.png')
+  - CLCSAlogo: DAStaticFile.using(filename='CLCSAlogo_nowords.png')
 ---
 features:
   css:
@@ -40,79 +41,14 @@ features:
     - custom-f2ddd3f2.js
   debug: False
   hide standard menu: True
+  inverse navbar: False
   progress bar: True
   show progress bar percentage: True
   navigation back button: True
 ---
 mandatory: True
 code: |
-  set_parts(logo='<img src="' + CLCSAlogo.url_for() + '" style="height: 60px;">')
----
-# Welcome screen
-mandatory: true
-question: CLCSA Service Directory
-subquestion: |
-
-  Welcome to the Community Legal Centres South Australia (CLCSA) service directory. This application will ask a series of questions and provide you with a list of legal services.
-  <hr>
-
-  #### **Privacy Statement:**
-  > CLCSA aims to protect your data. Your data will not be stored. Data will be deleted at the end of the application. Data is gathered only to create a list of services for you. 
-  <hr>
-
-  #### **Disclaimer:**
-  > A safe exit button is provided to you in case you need an emergency exit from the website. This is displayed in yellow in the question screens. The 'I do not agree' button will also direct you to a safe website.
-
-  > This application should not be used as professional legal advice.
-
-  > This application will only find legal services in SA.
-
-  > This application will ask personal questions. Do you agree?
-
-buttons:
-  - I agree: continue
-  - I do not agree: exit
-    url: http://www.bom.gov.au/sa/forecasts/adelaide.shtml
-
----
-# Final Screen
-mandatory: true
-question: Thank you for completing this application. Here are your responses,
-subquestion: |
-
-  Questions                           |Answers
-  ------------------------------------|--------
-  Location                            | ${display_CLCSAlocation}
-  Legal Issue                         | ${display_CLCSAlegalissue}
-  Gender                              | ${CLCSAgender}
-  Aboriginal or Torres Strait Islander| ${CLCSAindigenous}
-
-  #### Here are the list of services:
-  <hr>
-
-  % if len(CLCSAdisplay_specific_gender) > 0:
-  #### Gender-specific services:
-
-  ${CLCSAdisplay_gender_list}
-  %endif
-
-  % if len(CLCSAdisplay_indigenous) > 0:
-  #### Services for Aboriginal and Torres Strait Islander people:
-
-  ${CLCSAdisplay_indigenous_list}
-  % endif
-
-  % if len(CLCSAdisplay_leftovers) > 0:
-  #### General Services:
-
-  ${CLCSAdisplay_leftover_list}
-  % endif
-
-progress: 100
-buttons:
-  - Exit: exit
-    url: http://www.bom.gov.au/sa/forecasts/adelaide.shtml
-  - Restart: restart
+  set_parts(logo='<img src="' + CLCSAlogo.url_for() + '" style="height: 60px;"><span class="d-none d-sm-inline" style="margin-left: 2px;">CLCSA Service Directory</span>')
 ---
 # Table Block
 table: CLCSAdisplay_gender_list
