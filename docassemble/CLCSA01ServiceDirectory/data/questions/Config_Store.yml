@@ -22,14 +22,7 @@ code: |
         showIf=[
             ServiceCondition(TheSelected="legalIssue", IsEither=['Domestic Violence', 'Other']),
             ServiceCondition(TheSelected="location", Is="South"),
-            ServiceCondition(TheSelected="gender", IsEither=['Female', 'Other'])
-        ]),
-    ServiceContract(
-        # JusticeNet SA
-        organisationID='OrgJUSTICENETire64',
-        showIf=[
-            ServiceCondition(TheSelected="legalIssue", IsEither=['Financial', 'Migration', 'Mediation', 'Other']),
-            ServiceCondition(TheSelected="location", IsEither=['North', 'East', 'South', 'West', 'Central'])
+            ServiceCondition(TheSelected="gender", IsEither=['Female', 'Other']) # TODO: check if strict
         ]),
     ServiceContract(
         # Refugee Advocacy Service of South Australia
@@ -157,7 +150,7 @@ code: |
             ),
             ServiceCondition(
                 TheSelected='indigenous',
-                IsNot='No'
+                IsNot='No', # TODO: check if strict
             )
         ],
         branches=[
@@ -259,19 +252,12 @@ code: |
             ServiceCondition(TheSelected="location", Is="South")
         ]),
     ServiceContract(
-        # Riverland Commuity Justice Centre
-        organisationID='OrgRIVERLAND534373',
-        showIf=[
-            ServiceCondition(TheSelected="legalIssue", Is="Other"),
-            ServiceCondition(TheSelected="location", Is="South")
-        ]),
-    ServiceContract(
         # Women's Legal Services South Australia
         organisationID='OrgWOMENSLE500088',
         showIf=[
             ServiceCondition(TheSelected="legalIssue", IsEither=['Other', 'Domestic Violence']),
             ServiceCondition(TheSelected="location", IsEither=['North', 'East', 'South', 'West', 'Central']),
-            ServiceCondition(TheSelected="gender", IsEither=['Female', 'Other'])
+            ServiceCondition(TheSelected="gender", IsEither=['Female', 'Other']) # TODO: check if strict
         ]),
     ServiceContract(
         # JusticeNet SA
@@ -279,35 +265,6 @@ code: |
         showIf=[
             ServiceCondition(TheSelected="legalIssue", IsEither=['Financial', 'Migration', 'Mediation', 'Other']),
             ServiceCondition(TheSelected="location", IsEither=['North', 'East', 'South', 'West', 'Central'])
-        ]),
-    ServiceContract(
-        # Refugee Advocacy Service of South Australia
-        organisationID='OrgREFUGEEADnly209',
-        showIf=[
-            ServiceCondition(TheSelected="legalIssue", Is="Migration"),
-            ServiceCondition(TheSelected="location", Is="Central"),
-            ServiceCondition(TheSelected="indigenous", IsEither=['No', 'Do not wish to say'])
-        ]),
-    ServiceContract(
-        # Homelessness Legal Service
-        organisationID='OrgHOMELESSNEday176',
-        showIf=[
-            ServiceCondition(TheSelected="legalIssue", Is="Homelessness"),
-            ServiceCondition(TheSelected="location", Is="Central")
-        ]),
-    ServiceContract(
-        # Environmental Defenders Office
-        organisationID='OrgENVIRONMEN5000123',
-        showIf=[
-            ServiceCondition(TheSelected="legalIssue", Is="Environmental"),
-            ServiceCondition(TheSelected="location", IsEither=['Central', 'East'])
-        ]),
-    ServiceContract(
-        # Roma Mitchell Human Rights Volunteer Service
-        organisationID='OrgROMAMITCH506789',
-        showIf=[
-            ServiceCondition(TheSelected="legalIssue", Is="Other"),
-            ServiceCondition(TheSelected="location", IsEither=['Central', 'East'])
         ])
   ]
 ---
