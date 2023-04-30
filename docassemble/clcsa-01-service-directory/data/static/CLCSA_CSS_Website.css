@@ -399,6 +399,26 @@ input.labelauty + label {
   padding-bottom: 0.75rem;
 }
 
+/* icon in selection item must be svg but if img we need to resize */
+#dll_multiBox_item_img img, #dll_multiBox_item_img svg{
+  width: 100%;
+  height: auto;
+}
+
+/* css rules for single line selection items with icons eg gender question */
+.dll_multiBox_single_line #dll_multiBox_item {
+  align-items: center;
+}
+
+.dll_multiBox_single_line #dll_multiBox_item_img {
+  padding: 0;
+  width: 1.3rem;
+}
+
+.dll_multiBox_single_line #dll_multiBox_item_checkmark {
+  align-self: center;
+}
+
 #dll_multiBox_item_checkmark {
   width: 1.1rem;
   color: var(--bs-gray-400);

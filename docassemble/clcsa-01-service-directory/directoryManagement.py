@@ -52,9 +52,9 @@ class ServiceCondition:
 @dataclass(slots=True)
 class __ServiceContractBase:
     """ 
-        Filteration is carried out in two stages. The first stage filters the organisations. The second stage filters the branches.
+        filtration is carried out in two stages. The first stage filters the organisations. The second stage filters the branches.
 
-        If an organisation is excluded, the filteration process will conclude for that org and its branches will not be considered.  
+        If an organisation is excluded, the filtration process will conclude for that org and its branches will not be considered.  
     """
     # pass a list of conditions that will determine whether to exclude this item or not
     # or pass a boolean to always show (true) or never show (false). You must not True if no branch is provided. False can only be used for testing.
@@ -398,11 +398,12 @@ class ContractsManager:
             return []
 
         _hasInvalidValue = False
+
         for fltr in filters.values():
+            # each filter value could either be a plain string or a list of strings.
+            # we need to check that the value is not empty and is valid
+
             # check for valid string
-            # - deprecated:
-            #   if type(fltr.value) is str and fltr.value.strip() in ('', None):
-            #       _hasInvalidValue = True
             if type(fltr.value) is not list and type(fltr.value) is not str:
                 _hasInvalidValue = True
             # check there is at least one item in the list
