@@ -35,7 +35,7 @@ code: |
       "image": "centrelink"
     },
     {
-      "Domestic violence": "Domestic Violence",
+      "Domestic Violence": "Domestic Violence",
       "image": "domestic violence"
     },
     {
@@ -80,7 +80,7 @@ fields:
   - no label: CLCSA_location
     datatype: checkboxes
     choices:
-      - <b>City of Adelaide</b>: Central Adelaide CBD
+      - <b>City of Adelaide</b>: Central
       - <b>North</b><br><ul class="a"><li>Prospect</li><li>Port Adelaide-Enfield</li><li>Salisbury</li><li>Tea Tree Gully</li><li>Playford</li></ul>: North
       - <b>South</b><br><ul class="a"><li>Mitcham</li><li>Marion</li><li>Onkaparinga</li></ul>: South
       - <b>East</b><br><ul class="a"><li>Burnside</li><li>Campbelltown</li><li>Norwood, Payneham & St. Peters</li></ul>: East

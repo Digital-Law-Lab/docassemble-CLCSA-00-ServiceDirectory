@@ -175,7 +175,8 @@ class ContractsManager:
     _useLookAhead: bool = True
 
     def getLookAheadList(self) -> set[str]:
-        if len(self._filteredContracts) != 1:
+        # the look ahead list triggers new questions. If we have only one match, we don't ask further questions to avoid showing nothing to user
+        if len(self._filteredContracts) > 1:
             return self._lookAheadFilters
         return set()
 
@@ -262,6 +263,7 @@ class ContractsManager:
             if not _hasCorrespondingFilter:
                 # if we are using look ahead strategy add missing filter to the list of needed filters
                 if self._useLookAhead:
+                    # note we only add to the look ahead list filters that have not been defined yet
                     self._lookAheadFilters.add(_conditionName)
                 # we could not test this condittion
                 _testResults.append(False)
@@ -529,7 +531,7 @@ class ContractsManager:
     def getMatches(self) -> list[MatchedService]:
         """ Generates a list of filtered services with useful metadata about the matches (i.e. type, strength, etc)
 
-        It simply falttens the filtered ServiceContract list, by removing organisations that have branches and move those branches to the top level list, except when that branch is a variant, then it remains folded
+        It simply flattens the filtered ServiceContract list, by removing organisations that have branches and move those branches to the top level list, except when that branch is a variant, then it remains folded
         """
 
         _tempMatchedServices: list[MatchedService] = []
@@ -559,8 +561,10 @@ class ContractsManager:
             if len(_multiLocationsService.variants) > 0:
                 # add the multi location service
                 _tempMatchedServices.append(_multiLocationsService)
-        # sort by
-        return _tempMatchedServices
+        # sorting logic, first by query satisfaction, then condition satisfaction
+        _sortedMatchList = sorted(_tempMatchedServices, key=lambda s: (
+            s.querySatisfaction, s.conditionSatisfaction), reverse=True)
+        return _sortedMatchList
 
     def getFallbacks(self, serviceStore) -> None:
         # TODO: get relative fallbacks
@@ -644,7 +648,7 @@ class ServiceDirectoryManager:
                     _matchConcat.variants.append(_variantConcat)
             # add each service to the list of matches
             _matchesFull.append(_matchConcat)
-        # TODO: add sorting logic, first by query satisfaction, then condition satisfaction
+
         return _matchesFull
 
     def getFallbacks(self, serviceStore) -> None:

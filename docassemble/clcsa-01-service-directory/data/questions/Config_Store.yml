@@ -25,14 +25,6 @@ code: |
             ServiceCondition(TheSelected="gender", IsEither=['Female', 'Other'])
         ]),
     ServiceContract(
-        # Women's Legal Services South Australia
-        organisationID='OrgWOMENSLE500088',
-        showIf=[
-            ServiceCondition(TheSelected="legalIssue", IsEither=['Other', 'Domestic Violence']),
-            ServiceCondition(TheSelected="location", IsEither=['North', 'East', 'South', 'West', 'Central']),
-            ServiceCondition(TheSelected="gender", IsEither=['Female', 'Other'])
-        ]),
-    ServiceContract(
         # JusticeNet SA
         organisationID='OrgJUSTICENETire64',
         showIf=[
@@ -274,14 +266,6 @@ code: |
             ServiceCondition(TheSelected="location", Is="South")
         ]),
     ServiceContract(
-        # Inspiring Determination Independence Growth and Opportunities (INDIGO)
-        organisationID='OrgINSPIRINGire120',
-        showIf=[
-            ServiceCondition(TheSelected="legalIssue", IsEither=['Domestic Violence', 'Other']),
-            ServiceCondition(TheSelected="location", Is="South"),
-            ServiceCondition(TheSelected="gender", IsEither=['Female', 'Other'])
-        ]),
-    ServiceContract(
         # Women's Legal Services South Australia
         organisationID='OrgWOMENSLE500088',
         showIf=[
@@ -329,12 +313,28 @@ code: |
 ---
 code: |
   def driveTheFiltrationProcess():
-    # we need to assume we are in a loop, so every time start with a fresh filters list
+    # Everytime we seek a value that is not defined yet and has a corresponding question block, DA displayes the question and re-runs this code block from beginning repeating every procedure.
+    # so we need to assume we are in a loop.
+    # we should every time start with a fresh filters list
     CLCSA_ManagerDirectory.filters = Filters()
+    # however, we want to avoid unneeded filtration cycles. We could do this by creating a filter for every defined value before running the filteration process with `CLCSA_ManagerDirectory.filter()`. Normally, the application adds the first filter 'legalIssue' then run the filteration process, then based on the result of the look ahead, it asks another question. However, every time we ask a new question, we iterate through the entrie process by asking the first question, filtering, looking ahead, asking next question, then filter again, and so forth. Next question might already be defined in which case we should not filter for first question separately then add the next and filter again. We could combine all defined filters and run the filtration once, then based on the look ahead ask any further question, instead for filtering for every single question individually every time we proceed through the interview.
+    
     # ask first filter question
     CLCSA_ManagerDirectory.filters.add(
-        Filter(name="legalIssue", value=CLCSA_legalIssue))  # type: ignore
-    # do the initial filtration based on this first question and only ask more question if needed
+        Filter(name="legalIssue", value=CLCSA_legalIssue, hurdle=True)) 
+    # add every defined filter
+    if defined('CLCSA_location'):
+        # add location filter
+        CLCSA_ManagerDirectory.filters.add(Filter(name="location", value=CLCSA_location)) 
+    if defined('CLCSA_indigenous'):
+        # add indigenous filter
+        CLCSA_ManagerDirectory.filters.add(Filter(name="indigenous", value=CLCSA_indigenous))
+    if defined('CLCSA_gender'):
+        # add gender filter
+        CLCSA_ManagerDirectory.filters.add(Filter(name="gender", value=CLCSA_gender))
+
+    # if we don't have defined filters or this is the first run ask each question individually, and filter in steps.
+    # do the initial filtration based on this defined questions and only ask more question if needed
     CLCSA_ManagerDirectory.filter()
     _neededFilters = CLCSA_ManagerDirectory.getLookAheadList()
     if "location" in _neededFilters:
