@@ -52,7 +52,7 @@ class ServiceCondition:
 @dataclass(slots=True)
 class __ServiceContractBase:
     """ 
-        filtration is carried out in two stages. The first stage filters the organisations. The second stage filters the branches.
+        Filtration is carried out in two stages. The first stage filters the organisations. The second stage filters the branches.
 
         If an organisation is excluded, the filtration process will conclude for that org and its branches will not be considered.  
     """
