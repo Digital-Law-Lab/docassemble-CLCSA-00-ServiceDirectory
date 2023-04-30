@@ -42,8 +42,8 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
                 out.setdefault(package, []).append(prefix+name)
     return out
 
-setup(name='docassemble.clcsa-01-service-directory',
-      version='1.1',
+setup(name='docassemble.CLCSA01ServiceDirectory',
+      version='1.1.1',
       description=('CLCSA Legal Services Directory'),
       long_description='# Community Legal Centres South Australia\r\n\r\n## Legal Services Directory\r\n\r\nThis application asks users a simple set of questions and provides them with a set of legal services tailored to their particular circumstances\r\n\r\n## Authors\r\n\r\n- Jessica Phuong-Rafferty\r\n- Andjela Jovic\r\n- Zahraa Alwan\r\n- Shae Smith\r\n- Mattea Romano',
       long_description_content_type='text/markdown',
@@ -55,6 +55,6 @@ setup(name='docassemble.clcsa-01-service-directory',
       namespace_packages=['docassemble'],
       install_requires=[],
       zip_safe=False,
-      package_data=find_package_data(where='docassemble/clcsa-01-service-directory/', package='docassemble.clcsa-01-service-directory'),
+      package_data=find_package_data(where='docassemble/CLCSA01ServiceDirectory/', package='docassemble.CLCSA01ServiceDirectory'),
      )
 
